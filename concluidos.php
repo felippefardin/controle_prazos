@@ -54,13 +54,13 @@ require __DIR__ . '/includes/header.php';
 
             <?php foreach ($prazos as $prazo): ?>
                 <tr>
-                    <td><strong><?= e($prazo['numero_processo']) ?></strong></td>
+                    <td><a class="link" href="processo_visualizar.php?id=<?= (int)$prazo['id'] ?>"><strong><?= e($prazo['numero_processo']) ?></strong></a></td>
                     <td><?= e($prazo['assunto']) ?></td>
                     <td><?= e($prazo['procuradores_nomes'] ?: 'Não vinculado') ?></td>
                     <td class="cell-nowrap"><?= dataBr($prazo['data_entrada']) ?></td>
                     <td class="cell-nowrap"><?= dataBr($prazo['data_vencimento']) ?></td>
                     <td class="notes-cell"><?= nl2br(e($prazo['observacoes'] ?: 'Sem observações')) ?></td>
-                    <td class="actions"><a class="link" href="prazo_form.php?id=<?= (int)$prazo['id'] ?>">Editar</a></td>
+                    <td class="actions"><a class="link" href="processo_visualizar.php?id=<?= (int)$prazo['id'] ?>">Visualizar</a><a class="link" href="prazo_form.php?id=<?= (int)$prazo['id'] ?>">Editar</a></td>
                 </tr>
             <?php endforeach; ?>
             </tbody>

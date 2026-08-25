@@ -9,7 +9,7 @@ $usuario = usuarioLogado();
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= e($titulo ?? 'Controle de Prazos') ?></title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css?v=<?= (int)filemtime(__DIR__ . '/../assets/css/style.css') ?>">
 </head>
 <body>
 <header class="topbar">

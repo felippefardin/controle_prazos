@@ -15,10 +15,11 @@ if ($id <= 0 || !in_array($status, ['Novo', 'Em andamento', 'Concluído'], true)
     exit('Dados inválidos.');
 }
 
+$consulta=db()->prepare('SELECT status FROM prazos WHERE id=?');$consulta->bind_param('i',$id);$consulta->execute();$statusAnterior=$consulta->get_result()->fetch_assoc()['status']??null;
 $stmt = db()->prepare("UPDATE prazos SET status = ? WHERE id = ?");
 $stmt->bind_param('si', $status, $id);
 $stmt->execute();
-registrarAuditoria('status_processo_alterado','processo',$id,['status'=>$status]);
+registrarAuditoria($status==='Concluído'?'processo_concluido':'status_processo_alterado','processo',$id,['mudancas'=>['status'=>['antes'=>$statusAnterior,'depois'=>$status]]]);
 
 header('Location: ' . ($status === 'Concluído' ? 'concluidos.php' : 'prazos.php'));
 exit;

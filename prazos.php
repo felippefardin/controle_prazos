@@ -72,7 +72,7 @@ require __DIR__ . '/includes/header.php';
             <?php foreach ($prazos as $prazo): ?>
                 <?php $sit = statusPrazo($prazo['data_vencimento'], $prazo['status']); ?>
                 <tr>
-                    <td><strong><?= e($prazo['numero_processo']) ?></strong></td>
+                    <td><a class="link" href="processo_visualizar.php?id=<?= (int)$prazo['id'] ?>"><strong><?= e($prazo['numero_processo']) ?></strong></a></td>
                     <td><?= e($prazo['assunto']) ?></td>
                     <td class="cell-nowrap"><?= dataBr($prazo['data_entrada']) ?></td>
                     <td><?= e($prazo['procuradores_nomes'] ?: 'Não vinculado') ?></td>
@@ -80,6 +80,7 @@ require __DIR__ . '/includes/header.php';
                     <td class="cell-nowrap"><?= e($prazo['status']) ?></td>
                     <td><span class="status <?= $sit['classe'] ?>"><?= e($sit['texto']) ?></span></td>
                     <td class="actions">
+                        <a class="link" href="processo_visualizar.php?id=<?= (int)$prazo['id'] ?>">Visualizar</a>
                         <a class="link" href="prazo_form.php?id=<?= (int)$prazo['id'] ?>">Editar</a>
 
                         <?php if ($prazo['status'] !== 'Concluído'): ?>

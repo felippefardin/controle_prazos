@@ -17,10 +17,11 @@ if ($id <= 0 || mb_strlen($observacoes, 'UTF-8') > 5000) {
     exit('Observação inválida. Use no máximo 5.000 caracteres.');
 }
 
+$consulta=db()->prepare('SELECT observacoes FROM prazos WHERE id=?');$consulta->bind_param('i',$id);$consulta->execute();$observacaoAnterior=$consulta->get_result()->fetch_assoc()['observacoes']??null;
 $stmt = db()->prepare("UPDATE prazos SET observacoes = ? WHERE id = ? AND status <> 'Concluído'");
 $stmt->bind_param('si', $observacoes, $id);
 $stmt->execute();
-registrarAuditoria('observacao_processo_alterada','processo',$id);
+registrarAuditoria('observacao_processo_alterada','processo',$id,['mudancas'=>['observacoes'=>['antes'=>$observacaoAnterior,'depois'=>$observacoes]]]);
 
 $partes = parse_url($retorno);
 $pagina = basename($partes['path'] ?? 'prazos.php');

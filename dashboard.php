@@ -61,7 +61,7 @@ require __DIR__ . '/includes/header.php';
 <?php if (!$proximos): ?><tr><td colspan="6" class="empty">Nenhum processo vence nos próximos 30 dias.</td></tr><?php endif; ?>
 <?php foreach ($proximos as $i=>$p): ?>
 <?php $dias=(int)$p['dias_restantes']; $faixa=$dias<=10?'deadline-red':($dias<=20?'deadline-yellow':'deadline-green'); ?>
-<tr class="<?= $faixa ?>"><td><?= $i+1 ?></td><td><a class="link" href="prazo_form.php?id=<?= (int)$p['id'] ?>"><?= e($p['numero_processo']) ?></a></td><td><?= e($p['assunto']) ?></td><td><?= e($p['procuradores_nomes'] ?: 'Não vinculado') ?></td><td><?= dataBr($p['data_vencimento']) ?></td><td><span class="deadline-days <?= $faixa ?>"><?= $dias ?> dia(s)</span></td></tr>
+<tr class="<?= $faixa ?>"><td><?= $i+1 ?></td><td><a class="link" href="processo_visualizar.php?id=<?= (int)$p['id'] ?>"><?= e($p['numero_processo']) ?></a></td><td><?= e($p['assunto']) ?></td><td><?= e($p['procuradores_nomes'] ?: 'Não vinculado') ?></td><td><?= dataBr($p['data_vencimento']) ?></td><td><span class="deadline-days <?= $faixa ?>"><?= $dias ?> dia(s)</span></td></tr>
 <?php endforeach; ?>
 </tbody></table></div></section>
 
