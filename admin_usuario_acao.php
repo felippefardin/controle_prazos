@@ -1,0 +1,7 @@
+<?php
+declare(strict_types=1);
+require_once __DIR__.'/includes/auth.php';require_once __DIR__.'/includes/db.php';require_once __DIR__.'/includes/helpers.php';exigirAdmin();validarCsrf();
+$id=(int)($_POST['id']??0);$acao=$_POST['acao']??'';if($id<=0||!in_array($acao,['aprovar','bloquear','desbloquear','representar'],true))exit('Ação inválida.');
+$q=db()->prepare('SELECT id,nome,email,perfil,situacao FROM usuarios WHERE id=?');$q->bind_param('i',$id);$q->execute();$u=$q->get_result()->fetch_assoc();if(!$u||$u['perfil']==='admin')exit('Usuário inválido.');
+if($acao==='representar'){registrarAuditoria('admin_entrou_como_usuario','usuario',$id);$_SESSION['admin_original_id']=$_SESSION['usuario_id'];$_SESSION['admin_original_nome']=$_SESSION['usuario_nome'];$_SESSION['admin_original_email']=$_SESSION['usuario_email'];$_SESSION['usuario_id']=$id;$_SESSION['usuario_nome']=$u['nome'];$_SESSION['usuario_email']=$u['email'];$_SESSION['usuario_perfil']='usuario';session_regenerate_id(true);header('Location:dashboard.php');exit;}
+$situacao=$acao==='aprovar'||$acao==='desbloquear'?'aprovado':'bloqueado';$tentativas=$situacao==='aprovado'?0:5;$q=db()->prepare('UPDATE usuarios SET situacao=?,tentativas_login=?,bloqueado_em=IF(?=5,NOW(),NULL) WHERE id=?');$q->bind_param('siii',$situacao,$tentativas,$tentativas,$id);$q->execute();registrarAuditoria('admin_'.$acao.'_usuario','usuario',$id);header('Location:admin_usuarios.php?ok=1');exit;

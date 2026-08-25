@@ -1,0 +1,4 @@
+<?php
+declare(strict_types=1);
+require_once __DIR__.'/includes/auth.php';require_once __DIR__.'/includes/db.php';require_once __DIR__.'/includes/helpers.php';exigirLogin();if(!adminEstaRepresentando()){header('Location:dashboard.php');exit;}
+$adminId=(int)$_SESSION['admin_original_id'];registrarAuditoria('admin_saiu_da_conta_representada','usuario',(int)$_SESSION['usuario_id']);$q=db()->prepare("SELECT id,nome,email FROM usuarios WHERE id=? AND perfil='admin'");$q->bind_param('i',$adminId);$q->execute();$a=$q->get_result()->fetch_assoc();if(!$a){session_destroy();header('Location:index.php');exit;}$_SESSION['usuario_id']=$adminId;$_SESSION['usuario_nome']=$a['nome'];$_SESSION['usuario_email']=$a['email'];$_SESSION['usuario_perfil']='admin';unset($_SESSION['admin_original_id'],$_SESSION['admin_original_nome'],$_SESSION['admin_original_email']);session_regenerate_id(true);header('Location:admin_usuarios.php');exit;
