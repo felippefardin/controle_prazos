@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute();
             $usuarioId=(int)db()->insert_id; $codigo=(string)random_int(100000,999999); $codigoHash=password_hash($codigo,PASSWORD_DEFAULT);
             $stmt=db()->prepare("INSERT INTO verificacoes_email(usuario_id,tipo,codigo_hash,expira_em) VALUES (?,'cadastro',?,DATE_ADD(NOW(),INTERVAL 15 MINUTE))"); $stmt->bind_param('is',$usuarioId,$codigoHash); $stmt->execute();
-            registrarAuditoria('usuario_cadastrado','usuario',$usuarioId,['nome_usuario'=>$nomeUsuario]);
+            registrarAuditoria('usuario_cadastrado','usuario',$usuarioId,['nome'=>$nome,'nome_usuario'=>$nomeUsuario]);
             require_once __DIR__ . '/includes/email.php'; enviarCodigoVerificacao($email,$nome,$codigo,'Confirme seu cadastro');
             header('Location: confirmar_cadastro.php?email=' . urlencode($email));
             exit;

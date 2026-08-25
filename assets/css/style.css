@@ -453,6 +453,20 @@ button:disabled { opacity: .45; cursor: not-allowed; }
 .change-list del { color: #ff9c9c; }
 .change-list ins { color: #8af59a; text-decoration: none; }
 .muted-text { color: var(--muted); }
+.audit-help { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; margin-bottom: 18px; }
+.audit-help > div { display: grid; gap: 6px; padding: 15px 17px; border: 1px solid #303338; border-radius: 10px; background: linear-gradient(145deg,#202020,#191919); }
+.audit-help strong { color: var(--accent); }
+.audit-help span { color: var(--muted); font-size: 13px; line-height: 1.45; }
+.audit-list table { min-width: 1380px; }
+.audit-list th { white-space: nowrap; }
+.audit-person, .audit-account { display: block; min-width: 170px; color: #f0f0f0; font-weight: 700; }
+.audit-account { color: #9edfff; }
+.admin-access-label { display: inline-block; margin-top: 6px; padding: 3px 7px; border-radius: 999px; background: rgba(245,197,66,.14); color: #ffe17b; font-weight: 800; }
+.audit-action { display: inline-block; min-width: 190px; padding: 6px 9px; border-radius: 7px; background: rgba(0,191,255,.09); color: #bdeeff; font-weight: 800; }
+.audit-details { min-width: 280px; max-width: 430px; white-space: normal; }
+.audit-details ul { margin: 0; padding-left: 18px; }
+.audit-details li { line-height: 1.45; }
+.audit-details li + li { margin-top: 5px; }
 .tutorial-layout { display: grid; grid-template-columns: 250px minmax(0,1fr); gap: 18px; align-items: start; }
 .tutorial-index { position: sticky; top: 18px; padding: 18px; }
 .tutorial-index > strong { display: block; margin-bottom: 12px; font-size: 18px; }
@@ -592,6 +606,7 @@ code { color: var(--accent); }
     .deadline-alerts, .checkbox-grid { grid-template-columns: 1fr; }
     .tutorial-layout { grid-template-columns: 1fr; }
     .process-details { grid-template-columns: 1fr; }
+    .audit-help { grid-template-columns: 1fr; }
     .process-details .detail-wide { grid-column: 1; }
     .timeline-head { flex-direction: column; gap: 5px; }
     .change-list > div, .change-list > div:has(strong) { grid-template-columns: 1fr; }

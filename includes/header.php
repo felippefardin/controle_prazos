@@ -14,7 +14,7 @@ $usuario = usuarioLogado();
 <body>
 <header class="topbar">
     <div class="brand">
-        <div class="brand-mark">CP</div>
+        <!-- <div class="brand-mark">CP</div> -->
         <div>
             <strong>Controle de Prazos</strong>
             <small>Processos e vencimentos</small>

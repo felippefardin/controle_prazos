@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body class="login-body">
 <div class="login-card">
-    <div class="login-logo">CP</div>
+    <!-- <div class="login-logo">CP</div> -->
     <h1>Redefinir senha</h1>
     <p>Use o código recebido por e-mail e escolha uma nova senha.</p>
     <?php if ($erro): ?><div class="alert alert-danger"><?= e($erro) ?></div><?php endif; ?>

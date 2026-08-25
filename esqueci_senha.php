@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body class="login-body">
 <div class="login-card">
-    <div class="login-logo">CP</div>
+    <!-- <div class="login-logo">CP</div> -->
     <h1>Esqueci a senha</h1>
     <p>Informe seu e-mail para receber um código válido por 15 minutos.</p>
 

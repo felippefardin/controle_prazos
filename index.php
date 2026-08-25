@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['usuario_nome'] = $usuario['nome'];
             $_SESSION['usuario_email'] = $usuario['email'];
             $_SESSION['usuario_perfil'] = $usuario['perfil'];
-            registrarAuditoria('login_sucesso','usuario',$uid);
+            registrarAuditoria('login_sucesso','usuario',$uid,['tentativas_invalidas_zeradas'=>(int)$usuario['tentativas_login']]);
 
             header('Location: dashboard.php');
             exit;
@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body class="login-body">
 <div class="login-card">
-    <div class="login-logo">CP</div>
+    <!-- <div class="login-logo">CP</div> -->
     <h1>Controle de Prazos</h1>
     <p>Entre para acompanhar os vencimentos dos processos.</p>
 
