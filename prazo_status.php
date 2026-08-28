@@ -11,7 +11,7 @@ validarCsrf();
 $id = (int)($_POST['id'] ?? 0);
 $status = $_POST['status'] ?? '';
 
-if ($id <= 0 || !in_array($status, ['Novo', 'Em andamento', 'Concluído'], true)) {
+if ($id <= 0 || !in_array($status, ['Novo', 'Em andamento', 'Concluído', 'Retorno'], true)) {
     exit('Dados inválidos.');
 }
 

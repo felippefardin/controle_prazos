@@ -38,11 +38,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute();
 
             if (!enviarCodigoRecuperacao($usuario['email'], $usuario['nome'], $codigo)) {
+                $stmt = db()->prepare('UPDATE recuperacoes_senha SET usado_em = NOW() WHERE usuario_id = ? AND usado_em IS NULL');
+                $stmt->bind_param('i', $usuarioId);$stmt->execute();
                 error_log('Não foi possível enviar o código de recuperação para o usuário ' . $usuarioId);
+                $erro = 'Não foi possível enviar o código agora. Aguarde um minuto e tente novamente.';
+            } else {
+                registrarAuditoria('codigo_recuperacao_enviado','usuario',$usuarioId);
+                $mensagem = 'Código de recuperação enviado. Verifique a caixa de entrada e também a pasta de spam.';
             }
         }
-
-        $mensagem = 'Se o e-mail estiver cadastrado e o envio estiver configurado, o código chegará em alguns instantes.';
+        if (!$usuario) $mensagem = 'Se o e-mail estiver cadastrado, o código chegará em alguns instantes.';
     }
 }
 ?>
@@ -52,11 +57,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Esqueci a senha - Controle de Prazos</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css?v=<?= (int)filemtime(__DIR__ . '/assets/css/style.css') ?>">
 </head>
 <body class="login-body">
 <div class="login-card">
-    <!-- <div class="login-logo">CP</div> -->
+    <div class="login-logo">CP</div>
     <h1>Esqueci a senha</h1>
     <p>Informe seu e-mail para receber um código válido por 15 minutos.</p>
 

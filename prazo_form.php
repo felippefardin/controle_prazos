@@ -69,7 +69,7 @@ require __DIR__ . '/includes/header.php';
         <label>
             Status
             <select name="status">
-                <?php foreach (['Novo', 'Em andamento', 'Concluído'] as $status): ?>
+                <?php foreach (['Novo', 'Em andamento', 'Concluído', 'Retorno'] as $status): ?>
                     <option value="<?= e($status) ?>" <?= $dados['status'] === $status ? 'selected' : '' ?>><?= e($status) ?></option>
                 <?php endforeach; ?>
             </select>

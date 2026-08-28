@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS prazos (
     responsavel_id INT UNSIGNED NULL,
     data_entrada DATE NOT NULL,
     data_vencimento DATE NOT NULL,
-    status ENUM('Novo','Em andamento','Concluído') NOT NULL DEFAULT 'Novo',
+    status ENUM('Novo','Em andamento','Concluído','Retorno') NOT NULL DEFAULT 'Novo',
     observacoes TEXT NULL,
     criado_por INT UNSIGNED NULL,
     criado_em TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -49,6 +49,31 @@ CREATE TABLE IF NOT EXISTS prazo_procuradores (
     PRIMARY KEY (prazo_id, procurador_id),
     CONSTRAINT fk_prazo_procuradores_prazo FOREIGN KEY (prazo_id) REFERENCES prazos(id) ON DELETE CASCADE,
     CONSTRAINT fk_prazo_procuradores_procurador FOREIGN KEY (procurador_id) REFERENCES procuradores(id) ON DELETE RESTRICT
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS processo_comentarios (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    prazo_id INT UNSIGNED NOT NULL,
+    usuario_id INT UNSIGNED NULL,
+    comentario TEXT NOT NULL,
+    criado_em TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_comentarios_processo (prazo_id, criado_em),
+    CONSTRAINT fk_comentarios_processo FOREIGN KEY (prazo_id) REFERENCES prazos(id) ON DELETE CASCADE,
+    CONSTRAINT fk_comentarios_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE SET NULL
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS processo_anexos (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    prazo_id INT UNSIGNED NOT NULL,
+    usuario_id INT UNSIGNED NULL,
+    nome_original VARCHAR(255) NOT NULL,
+    nome_armazenado CHAR(64) NOT NULL UNIQUE,
+    mime_type VARCHAR(120) NOT NULL,
+    tamanho BIGINT UNSIGNED NOT NULL,
+    criado_em TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_anexos_processo (prazo_id, criado_em),
+    CONSTRAINT fk_anexos_processo FOREIGN KEY (prazo_id) REFERENCES prazos(id) ON DELETE CASCADE,
+    CONSTRAINT fk_anexos_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE SET NULL
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS recuperacoes_senha (

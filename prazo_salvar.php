@@ -17,7 +17,7 @@ $dataVencimento = $_POST['data_vencimento'] ?? '';
 $status = $_POST['status'] ?? 'Novo';
 $observacoes = trim($_POST['observacoes'] ?? '');
 
-$statusPermitidos = ['Novo', 'Em andamento', 'Concluído'];
+$statusPermitidos = ['Novo', 'Em andamento', 'Concluído', 'Retorno'];
 
 if ($numero === '' || $assunto === '' || $dataEntrada === '' || $dataVencimento === '' || !$procuradores || !in_array($status, $statusPermitidos, true)) {
     exit('Dados inválidos.');
