@@ -4,6 +4,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/includes/auth.php';
 require_once __DIR__ . '/includes/db.php';
 require_once __DIR__ . '/includes/helpers.php';
+require_once __DIR__ . '/includes/alerta_login.php';
 
 exigirLogin();
 
@@ -29,6 +30,8 @@ foreach ($cards as $k => $_) {
 
 $proximos = $conn->query("SELECT p.*, proc.procuradores_nomes, DATEDIFF(p.data_vencimento,CURDATE()) dias_restantes FROM prazos p LEFT JOIN (SELECT pp.prazo_id,GROUP_CONCAT(pr.nome ORDER BY pr.nome SEPARATOR ', ') procuradores_nomes FROM prazo_procuradores pp JOIN procuradores pr ON pr.id=pp.procurador_id GROUP BY pp.prazo_id) proc ON proc.prazo_id=p.id WHERE p.status<>'Concluído' AND DATEDIFF(p.data_vencimento,CURDATE()) BETWEEN 1 AND 30 ORDER BY p.data_vencimento,p.id")->fetch_all(MYSQLI_ASSOC);
 $alertaCinco = array_filter($proximos, fn(array $p): bool => (int)$p['dias_restantes'] >= 1 && (int)$p['dias_restantes'] <= 5);
+
+$alertasLogin = consumirAlertaVencimentoLogin($_SESSION, $proximos);
 
 $titulo = 'Dashboard';
 require __DIR__ . '/includes/header.php';
@@ -69,5 +72,6 @@ require __DIR__ . '/includes/header.php';
     <div class="alert alert-success alert-page">Observações salvas com sucesso.</div>
 <?php endif; ?>
 
+<?php require __DIR__ . '/includes/modal_alerta_login.php'; ?>
 <?php require __DIR__ . '/includes/modal_exportacao.php'; ?>
 <?php require __DIR__ . '/includes/footer.php'; ?>

@@ -58,6 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Esqueci a senha - Controle de Prazos</title>
     <link rel="stylesheet" href="assets/css/style.css?v=<?= (int)filemtime(__DIR__ . '/assets/css/style.css') ?>">
+    <script src="assets/js/theme.js?v=<?= (int)filemtime(__DIR__ . '/assets/js/theme.js') ?>"></script>
 </head>
 <body class="login-body">
 <div class="login-card">
